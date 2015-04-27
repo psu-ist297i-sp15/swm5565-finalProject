@@ -1,0 +1,170 @@
+<% content_for :js_inject do %>
+  
+
+<h5>What campus are you on?</h5>
+<select id="commonsList">
+  <option value="0">East</option>
+  <option value="1">Pollock</option>
+  <option value="2">South</option>
+  <option value="3">West</option>
+  <option value="4">North</option>
+</select>
+<br><br><br><br><br>
+<button>Update Display</button>
+<h3>Display Open Food</h3>
+
+
+
+<div id="menu">
+</div>
+
+  <script>
+  $( document ).ready(function() {
+    $("button").on('click', get_hours);
+  });
+  function get_hours() {
+    $.ajax({
+      url: "http://localhost:3000/hours/",
+      dataType: 'json',
+      success: function(json) {
+        tmp = json.recordSet.DATA;
+        campus_code_index = 17;
+        campus_code = 'UP';
+        hours_open_index = 5;
+        hours_close_index = 6;
+        common_name_index = 13;
+        start_day = 3;
+        end_day = 4;
+        buffet_name = 16;
+        selected_commons = "";
+
+        //grabs the name of the selected commons
+        commons = document.getElementById("commonsList");
+        var commons_val = commons.options[commons.selectedIndex].value;
+        console.log(commons_val);
+
+        // get the current time
+        d = new Date();
+        hours = d.getHours();
+        min = d.getMinutes();
+        day = d.getDay() + 1; // their API starts with Sunday == 1
+
+        // console.log(hours + " " + min + " " + day);
+        // console.log(tmp);
+        
+        for(i=0; i < tmp.length; i++) {
+          if(tmp[i][campus_code_index] == campus_code) {
+
+            switch(commons_val) {
+              case "0":
+                  selected_commons = "Findlay Commons";
+                  break
+              case "1":
+                  selected_commons = "Pollock Commons";
+                  break
+              case "2":
+                  selected_commons = "South Food District";
+                  break;
+              case "3":
+                  selected_commons = "West Food District";
+                  break;
+              case "4":
+                  selected_commons = "North Food District";
+                  break;
+              default:
+                console.log("in default : " + commons_val);
+              }//end switch
+
+              // is it open today, only displays open places
+              console.log(day);
+              if (day >= tmp[i][start_day] && day <= tmp[i][end_day]) {              
+
+                console.log("selected commons: " + selected_commons);
+
+                if(tmp[i][buffet_name] == selected_commons){
+                  console.log("in loop: " + tmp[i][common_name_index]);
+                  $("#menu").append(tmp[i][common_name_index] + " hours today:  " + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "<br>");
+                }
+
+                // console.log("buffet_name: " + buffet_name);
+                // console.log("tmp[i][common_name_index]: " + tmp[i][common_name_index]);
+
+                //this changes the name Dining Commons to the actual name of the commons and also appends everything in UP to the display
+                // if(tmp[i][common_name_index] == 'Dining Commons'){
+                //   $("#menu").append(tmp[i][buffet_name] + " hours today:  " + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "<br>");
+                // }else{
+                //   $("#menu").append(tmp[i][common_name_index] + " hours today:  " + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "<br>");
+                // }
+                  
+                }// closed today
+
+                //checks to see if it has weird saturday && sunday hours
+                if(tmp[i][start_day] == "7" &&  tmp[i][end_day] == "1" ){
+                  //this statement makes sure that the current day is actually saturday or sunday
+                  if(day == 7 || day == 1){
+                    //only prints out the selected commons' information
+                    if(tmp[i][buffet_name] == selected_commons){
+                      $("#menu").append(tmp[i][common_name_index] + " hours today:  " + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "<br>");
+                    }//end of selected commons checker
+                  }//end of day checker
+                }
+          
+          }//end of if statement checking campus code
+
+        }//end of for loop
+        
+        
+        //console.log(json.recordCount);
+        //console.log(json.recordSet.COLUMNS);
+        //console.log(json.recordSet.DATA[0]);
+      }   
+    });
+
+//************ Ask Dan why this function doesn't work
+  // function name_day(commons_val, selected_commons) {
+  //   console.log("name day : " + commons_val);
+  //   switch(commons_val) {
+  //     case "0":
+  //         selected_commons = "Findlay Commons";
+  //         console.log("in switch : " + commons_val);
+  //         break
+  //     case 1:
+  //         return selected_commons = "Pollock Commons";
+  //         break
+  //     // case 2:
+  //     //     code block
+  //     //     break;
+  //     // case 3:
+  //     //     code block
+  //     //     break;
+  //     // case 4:
+  //     //     code block
+  //     //     break;
+  //     default:
+  //       console.log("in default : " + commons_val);
+  //   }//end switch
+
+  //   return selected_commons;
+  // }//end name day
+}
+</script>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
