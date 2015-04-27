@@ -1,26 +1,30 @@
 <% content_for :js_inject do %>
-  
+ 
+<div class="container-fluid"> 
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4 text-center">
+      <br><br><br><br>
+      <h2>Pick a commons:</h2>
+      <select id="commonsList">
+        <option value="0">East</option>
+        <option value="1">Pollock</option>
+        <option value="2">South</option>
+        <option value="3">West</option>
+        <option value="4">North</option>
+      </select>
+      <br><br><br><br><br>
+      <button class="btn btn-primary" id="update">Update Display</button>
+      <button class="btn btn-primary" id="change_commons">Change commons</button>
 
-<h5>What campus are you on?</h5>
-<select id="commonsList">
-  <option value="0">East</option>
-  <option value="1">Pollock</option>
-  <option value="2">South</option>
-  <option value="3">West</option>
-  <option value="4">North</option>
-</select>
-<br><br><br><br><br>
-<button>Update Display</button>
-<h3>Display Open Food</h3>
-
-
-
-<div id="menu">
-</div>
-
+      <!-- here is where the displayed times get appended -->
+      <div id="menu">
+      </div>
+    </div>
+  </div> <!-- end of row -->
+</div> <!-- end of container -->
   <script>
   $( document ).ready(function() {
-    $("button").on('click', get_hours);
+    $("#update").on('click', get_hours);
   });
   function get_hours() {
     $.ajax({
@@ -117,8 +121,20 @@
         //console.log(json.recordCount);
         //console.log(json.recordSet.COLUMNS);
         //console.log(json.recordSet.DATA[0]);
+
+        //hide title on button click
+        $("h2").hide(0);
+        //hide select scroll on button click
+        $("select").hide(0);
+        //hide button on button click
+        $("button").hide(0);
+
+        //show change button
+        $("#change_commons").show(0);
+
+
       }   
-    });
+    });//end of getHours();
 
 //************ Ask Dan why this function doesn't work
   // function name_day(commons_val, selected_commons) {
@@ -148,6 +164,7 @@
   // }//end name day
 }
 </script>
+
 <% end %>
 
 
