@@ -12,7 +12,6 @@
         <option value="3">West</option>
         <option value="4">North</option>
       </select>
-      <br><br><br><br><br>
       <button class="btn btn-primary" id="update">Update Display</button>
       <button class="btn btn-primary" id="change_commons">Change commons</button>
 
@@ -25,6 +24,7 @@
   <script>
   $( document ).ready(function() {
     $("#update").on('click', get_hours);
+    $("#change_commons").on('click', goBack);
   });
   function get_hours() {
     $.ajax({
@@ -87,7 +87,7 @@
 
                 if(tmp[i][buffet_name] == selected_commons){
                   console.log("in loop: " + tmp[i][common_name_index]);
-                  $("#menu").append(tmp[i][common_name_index] + " hours today:  " + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "<br>");
+                  $("#menu").append("<p><b>" + tmp[i][common_name_index] + " hours today:  </b>" + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "</p>");
                 }
 
                 // console.log("buffet_name: " + buffet_name);
@@ -127,7 +127,7 @@
         //hide select scroll on button click
         $("select").hide(0);
         //hide button on button click
-        $("button").hide(0);
+        $("#update").hide(0);
 
         //show change button
         $("#change_commons").show(0);
@@ -135,7 +135,6 @@
 
       }   
     });//end of getHours();
-
 //************ Ask Dan why this function doesn't work
   // function name_day(commons_val, selected_commons) {
   //   console.log("name day : " + commons_val);
@@ -162,7 +161,15 @@
 
   //   return selected_commons;
   // }//end name day
-}
+  };
+
+  function goBack() {
+    $("h2").show(0);
+    $("select").show(0);
+    $("#change_commons").hide(0);
+    $("#update").show(0);
+    $("#menu").empty(0);
+  };
 </script>
 
 <% end %>
