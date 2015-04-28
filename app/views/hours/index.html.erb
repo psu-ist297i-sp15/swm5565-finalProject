@@ -3,7 +3,6 @@
 <div class="container-fluid"> 
   <div class="row">
     <div class="col-md-4 col-md-offset-4 text-center">
-      <br><br><br><br>
       <h2>Pick a commons:</h2>
       <select id="commonsList">
         <option value="0">East</option>
@@ -20,7 +19,6 @@
       </div>
 
       <button class="btn btn-primary" id="change_commons">Change commons</button>
-      <br><br>
     </div>
   </div> <!-- end of row -->
 </div> <!-- end of container -->
@@ -90,7 +88,7 @@
 
                 if(tmp[i][buffet_name] == selected_commons){
                   console.log("in loop: " + tmp[i][common_name_index]);
-                  $("#menu").append("<p><b>" + tmp[i][common_name_index] + " hours today:  </b>" + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "</p>" + "<hr>");
+                  $("#menu").append("<p><b>" + tmp[i][common_name_index] + " hours today:  </b>" + tmp[i][hours_open_index] + " - " + tmp[i][hours_close_index] + "</p>" + "<hr>");
                 }
 
                 // console.log("buffet_name: " + buffet_name);
