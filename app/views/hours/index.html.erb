@@ -12,12 +12,15 @@
         <option value="3">West</option>
         <option value="4">North</option>
       </select>
+      <br><br>
       <button class="btn btn-primary" id="update">Update Display</button>
-      <button class="btn btn-primary" id="change_commons">Change commons</button>
 
       <!-- here is where the displayed times get appended -->
       <div id="menu">
       </div>
+
+      <button class="btn btn-primary" id="change_commons">Change commons</button>
+      <br><br>
     </div>
   </div> <!-- end of row -->
 </div> <!-- end of container -->
@@ -28,7 +31,7 @@
   });
   function get_hours() {
     $.ajax({
-      url: "http://localhost:3000/hours/",
+      url: "/hours/",
       dataType: 'json',
       success: function(json) {
         tmp = json.recordSet.DATA;
@@ -87,7 +90,7 @@
 
                 if(tmp[i][buffet_name] == selected_commons){
                   console.log("in loop: " + tmp[i][common_name_index]);
-                  $("#menu").append("<p><b>" + tmp[i][common_name_index] + " hours today:  </b>" + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "</p>");
+                  $("#menu").append("<p><b>" + tmp[i][common_name_index] + " hours today:  </b>" + tmp[i][hours_open_index] + " " + tmp[i][hours_close_index] + "</p>" + "<hr>");
                 }
 
                 // console.log("buffet_name: " + buffet_name);
